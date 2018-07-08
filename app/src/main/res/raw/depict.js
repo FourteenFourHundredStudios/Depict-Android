@@ -2,7 +2,31 @@ class component {
 
     constructor(){
 
+       // print("depict begun!")
+
+        this.value = this.values()
+
+
+
+        Object.keys(this.value).forEach(function(key,index) {
+
+            var value=this.value[key];
+            Object.defineProperty(this.value, key, {
+                get: function() {
+                    return value;
+                },
+                set: function(v) {
+                    value = v;
+                }
+            });
+        },this);
+
         __depict__(this.depict())
+        this.onStart()
+    }
+
+    values(){
+        return {}
     }
 
     depict(){

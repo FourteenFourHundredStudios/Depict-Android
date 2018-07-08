@@ -23,7 +23,8 @@ public class Depict {
         this.source = readRawRes(initResId);
         this.runtime = V8.createV8Runtime();
 
-        runtime.registerJavaMethod(new Printer(),"print","print",new Class<?>[]{String.class});
+        runtime.registerJavaMethod(new Printer(),"print","print",new Class<?>[]{Object.class});
+
 
         runtime.executeObjectScript(readRawRes(R.raw.depict));
 
@@ -36,9 +37,27 @@ public class Depict {
     }
 
     public static class Printer{
-        public void print(String string){
-            Log.e("Depict",string);
+        public void print(Object obj){
+
+            String val = obj.toString();
+
+            if(obj instanceof V8Object){
+                val = printObj((V8Object) obj);
+            }
+
+            Log.e("Depict",val);
         }
+
+        public String printObj(V8Object object){
+            String val = "{";
+            if(object.getKeys().length<1)return  "{}";
+            for (int i =0 ; i<object.getKeys().length;i++){
+                val += object.getKeys()[i] + ":" + object.get(object.getKeys()[i].toString())+", ";
+            }
+            val=val.substring(0,val.length()-2)+"}";
+            return val;
+        }
+
     }
 
 
