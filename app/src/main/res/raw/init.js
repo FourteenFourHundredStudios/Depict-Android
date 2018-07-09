@@ -9,7 +9,8 @@ class form extends component{
 
     depict(){
         return  {"is" : "layout", "orientation": enums.VERTICAL , "with": [
-                    {"is": "text", "value":"hello, I'm {name}, and I drive a {car}"}
+                    {"is": "text", "value":"hello, I'm {name}, and I drive a {car}"},
+                    {"is": "button", "value":"click me", "onClick":this.onClick}
                ]};
 
     }
@@ -17,7 +18,11 @@ class form extends component{
     onStart(){
 
     }
-    
+
+    onClick(button){
+        this.value.name = "johnny"
+    }
+
 
 }
 

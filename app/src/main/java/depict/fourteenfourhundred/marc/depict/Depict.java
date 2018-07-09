@@ -30,8 +30,12 @@ public class Depict {
         runtime.executeObjectScript(readRawRes(R.raw.depict));
 
         V8Object builtins = new V8Object(runtime);
-        //builtins.registerJavaMethod(new DepictRender(context,runtime),"depict","render",new Class<?>[]{V8Array.class});
-        builtins.registerJavaMethod(new DepictRender(context,runtime),"initComponent","initComponent",new Class<?>[]{V8Object.class});
+        DepictRender render = new DepictRender(context,runtime);
+
+
+        builtins.registerJavaMethod(render,"initComponent","initComponent",new Class<?>[]{V8Object.class});
+
+        builtins.registerJavaMethod(render,"valueChange","valueChange",new Class<?>[]{String.class});
 
         runtime.add("depict",builtins);
 
@@ -55,7 +59,7 @@ public class Depict {
             Log.e("Depict",val);
         }
 
-        public String printObj(V8Object object){
+        public static String printObj(V8Object object){
             String val = "{";
             if(object.getKeys().length<1)return  "{}";
             for (int i =0 ; i<object.getKeys().length;i++){

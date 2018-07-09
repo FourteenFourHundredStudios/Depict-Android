@@ -13,8 +13,13 @@ class component {
                 get: function() {
                     return value;
                 },
-                set: function(v) {
-                    value = v;
+                set: function(newValue) {
+
+
+                    //{"change":newValue}
+                    value = newValue;
+                    depict.valueChange(key);
+
                 }
             });
         },this);
