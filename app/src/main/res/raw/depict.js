@@ -2,8 +2,6 @@ class component {
 
     constructor(){
 
-       // print("depict begun!")
-
         this.value = this.values()
 
 
@@ -21,7 +19,6 @@ class component {
             });
         },this);
 
-        __depict__(this.depict())
         this.onStart()
     }
 

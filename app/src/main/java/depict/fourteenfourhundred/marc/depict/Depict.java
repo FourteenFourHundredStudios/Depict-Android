@@ -7,7 +7,9 @@ import android.util.Log;
 
 import com.eclipsesource.v8.V8;
 import com.eclipsesource.v8.V8Array;
+import com.eclipsesource.v8.V8Function;
 import com.eclipsesource.v8.V8Object;
+import com.eclipsesource.v8.V8Value;
 
 import java.io.InputStream;
 
@@ -25,10 +27,15 @@ public class Depict {
 
         runtime.registerJavaMethod(new Printer(),"print","print",new Class<?>[]{Object.class});
 
-
         runtime.executeObjectScript(readRawRes(R.raw.depict));
 
-        runtime.registerJavaMethod(new DepictRender(context,runtime.getObject("propertyMap")),"depict","__depict__",new Class<?>[]{V8Array.class});
+        V8Object builtins = new V8Object(runtime);
+        //builtins.registerJavaMethod(new DepictRender(context,runtime),"depict","render",new Class<?>[]{V8Array.class});
+        builtins.registerJavaMethod(new DepictRender(context,runtime),"initComponent","initComponent",new Class<?>[]{V8Object.class});
+
+        runtime.add("depict",builtins);
+
+
 
 
 

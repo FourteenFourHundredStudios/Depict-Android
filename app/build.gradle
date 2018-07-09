@@ -24,4 +24,5 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
     implementation 'com.eclipsesource.j2v8:j2v8:4.6.0@aar'
+    implementation 'org.jetbrains:annotations-java5:15.0'
 }

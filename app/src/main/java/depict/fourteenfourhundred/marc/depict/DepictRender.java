@@ -13,29 +13,43 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.eclipsesource.v8.V8;
 import com.eclipsesource.v8.V8Array;
 import com.eclipsesource.v8.V8Object;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DepictRender {
 
     Activity activity;
+    V8 runtime;
     V8Object objectMap;
+    V8Object component;
+    V8Object values;
 
-    public DepictRender(Context context,V8Object objectMap){
+    public DepictRender(Context context, V8 runtime){
         this.activity = (Activity) context;
-        this.objectMap = objectMap;
-        //Log.e("g",objectMap.getObject("value").getString("type"));
+        this.runtime = runtime;
+        this.objectMap = runtime.getObject("propertyMap");
+
+
+
     }
 
-    public void depict(V8Array params){
-        for(int i=0; i<params.length();i++){
-            V8Object element = params.getObject(i);
+    public void initComponent(V8Object component){
+        this.component = component;
+        this.values = component.executeObjectFunction("values",new V8Array(runtime));
+        V8Object obj = component.executeObjectFunction("depict",new V8Array(runtime));
+        depict(obj);
+    }
 
-            FrameLayout frame = activity.findViewById(R.id.main);
-            frame.addView(depictElement(element));
-        }
+    public void depict(V8Object element){
+        FrameLayout frame = activity.findViewById(R.id.main);
+        frame.addView(depictElement(element));
     }
 
     public View viewFromIs(V8Object element){
@@ -68,27 +82,41 @@ public class DepictRender {
         map("orientation", option())
     }*/
 
+    public Object registerValues(Object value){
+        //runtime.
+
+
+        if(value instanceof String){
+            String newValue = value.toString();
+            Pattern pattern = Pattern.compile("\\{(.*?)\\}");
+            Matcher m = pattern.matcher(newValue);
+            while (m.find()) {
+                newValue = newValue.replace(m.group(),values.getString(m.group(1)));
+            }
+            return newValue;
+        }else{
+            return value;
+        }
+
+    }
 
 
     public View parseParameters(View view, V8Object element){
 
-        try {
+
 
             for(String key: element.getKeys()) {
 
                 if (key.equals("is") || key.equals("with") || key.equals("onClick")) continue;
 
-                //Log.e("few",key+"");
-
-               // V8Object value = element.getObject(key);
                 Object value = element.get(key);
 
-                //Log.e("f",value.toString());
+
 
                 int transformationType = objectMap.getObject(key).getType("android");
 
 
-
+                value = registerValues(value);
 
                 if (transformationType == V8Object.V8_ARRAY){
 
@@ -99,32 +127,25 @@ public class DepictRender {
 
                     if(paramClass.equals(String.class)){
                         paramClass=CharSequence.class;
+
                     }else if(paramClass.equals(Integer.class)){
                         paramClass=int.class;
                     }
 
-                    //new LinearLayout(activity).setOrientation(0);
 
 
-                    /*
-                    for (Method m : view.getClass().getMethods()){
-                        if(m.getName().equals("setOrientation")){
-                            Log.e("FOUD",(m.getParameterTypes()[0].toString())+"");
-                        }
+                    try {
+                        view.getClass().getMethod(objectMap.getObject(key).getArray("android").getString(0),paramClass).invoke(view,value);
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
-*/
 
-
-                    view.getClass().getMethod(objectMap.getObject(key).getArray("android").getString(0),paramClass).invoke(view,value);
                 }
 
 
 
             }
-        }catch (Exception e){
-            //e.printStackTrace();
-            Log.e("ERROR",e.getMessage());
-        }
+
 
 
 

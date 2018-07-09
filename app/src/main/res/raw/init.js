@@ -8,25 +8,17 @@ class form extends component{
     }
 
     depict(){
-        return [
-           { "is" : "layout", "orientation": enums.VERTICAL , "with": [
-                {"is": "text", "value":"hello, I'm {name}, and I drive a {car}"}
-           ]}
-       ]
+        return  {"is" : "layout", "orientation": enums.VERTICAL , "with": [
+                    {"is": "text", "value":"hello, I'm {name}, and I drive a {car}"}
+               ]};
+
     }
 
     onStart(){
-        this.value.name = "apples"
 
-
-    }
-    
-    press(button){
-        print(button.value)
     }
     
 
 }
 
-
-new form();
+depict.initComponent(new form())
