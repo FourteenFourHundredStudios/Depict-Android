@@ -2,28 +2,24 @@ package depict.fourteenfourhundred.marc.depict;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.Editable;
-import android.text.Layout;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.eclipsesource.v8.V8Array;
 import com.eclipsesource.v8.V8Object;
+import com.fourteenfourhundred.depict.views.DepictButtonView;
+import com.fourteenfourhundred.depict.views.DepictTextView;
 
-import java.lang.reflect.Method;
-
-public class DepictRender {
+public class DepictRenderOld {
 
     Activity activity;
     V8Object objectMap;
 
-    public DepictRender(Context context,V8Object objectMap){
+    public DepictRenderOld(Context context,V8Object objectMap){
         this.activity = (Activity) context;
         this.objectMap = objectMap;
         //Log.e("g",objectMap.getObject("value").getString("type"));
@@ -46,7 +42,7 @@ public class DepictRender {
                 view = new LinearLayout(activity);
                 break;
             case "text":
-                view = new DepictTextView(activity,element);
+                //view = new DepictTextView(activity,element);
                 break;
             case "textInput":
                 view = new EditText(activity);

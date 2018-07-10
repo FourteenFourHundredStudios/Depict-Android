@@ -2,21 +2,11 @@ class form extends component{
 
 
     depict(){
-        return [
-           { "is" : "layout", "orientation": enums.VERTICAL , "with": [
-                {"is": "text", "value":"hmm"},
-                {"is": "text", "value":"YUPPP"},
-                {"is": "button", "value":"wow button!!!", "onClick": this.press}
-           ]}
-       ]
-    }
-    
-    press(button){
-        print(button.value)
+        return {"is": "text", "value":"hmm"};
     }
     
 
 }
 
 
-new form();
+depict.initComponent(new form());

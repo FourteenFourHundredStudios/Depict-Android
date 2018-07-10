@@ -1,10 +1,11 @@
-package depict.fourteenfourhundred.marc.depict;
+package com.fourteenfourhundred.depict.views;
 
 import android.content.Context;
 import android.view.MotionEvent;
 import android.widget.Button;
 
 import com.eclipsesource.v8.V8Object;
+
 
 public class DepictButtonView extends android.support.v7.widget.AppCompatButton{
 
@@ -21,6 +22,12 @@ public class DepictButtonView extends android.support.v7.widget.AppCompatButton{
             self.executeJSFunction("onClick",self);
         }
         return super.onTouchEvent(event);
+    }
+
+
+
+    public void text(String text){
+        setText(text);
     }
 
 }

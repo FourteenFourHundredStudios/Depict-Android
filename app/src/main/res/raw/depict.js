@@ -2,11 +2,15 @@ class component {
 
     constructor(){
 
-        __depict__(this.depict())
+        this.onStart();
     }
 
     depict(){
         return {}
+    }
+
+    onStart(){
+
     }
 
 }
