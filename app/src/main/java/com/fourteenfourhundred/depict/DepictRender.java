@@ -28,8 +28,9 @@ public class DepictRender {
 
     public DepictComponentView depictElement(V8Object element){
         DepictComponentView wrapper = ComponentHandler.createComponent(element.getString("is"));
+        wrapper.setComponent(element);
         wrapper = setProperties(wrapper,element);
-
+        wrapper.initEvents();
         return wrapper;
     }
 

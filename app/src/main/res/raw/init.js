@@ -2,9 +2,12 @@ class form extends component{
 
 
     depict(){
-        return {"is": "text", "value":"hmm"};
+        return {"is": "text", "value":"hmm","onClick":this.clicked};
     }
-    
+
+    clicked(){
+        print("woaahhhh clicked");
+    }
 
 }
 
