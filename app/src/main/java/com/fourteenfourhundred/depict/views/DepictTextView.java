@@ -1,6 +1,7 @@
 package com.fourteenfourhundred.depict.views;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.MotionEvent;
 
 import com.fourteenfourhundred.depict.DepictAnnotations;
@@ -19,14 +20,10 @@ public class DepictTextView extends android.support.v7.widget.AppCompatTextView{
         this.setText(text);
     }
 
-    /*
-    @Override
-    public boolean onTouchEvent(final MotionEvent event) {
-        if(event.getAction() == MotionEvent.ACTION_UP){
-            self.executeJSFunction("onClick",self);
-        }
-        return super.onTouchEvent(event);
-    }*/
+    @DepictAnnotations.DepictProperty(name = "color")
+    public void setColor(String color){
+        this.setTextColor(Color.parseColor(color));
+    }
 
 
 

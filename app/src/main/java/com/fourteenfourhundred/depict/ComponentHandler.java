@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.fourteenfourhundred.depict.views.DepictButtonView;
+import com.fourteenfourhundred.depict.views.DepictLayoutView;
 import com.fourteenfourhundred.depict.views.DepictTextView;
 import com.fourteenfourhundred.depict.views.DepictView;
 
@@ -15,11 +16,15 @@ public class ComponentHandler {
     public Context context;
     public static Class<?>[] componentClasses = {
         DepictTextView.class,
-
+        DepictLayoutView.class,
+        DepictButtonView.class
     };
 
     public static DepictComponentView createComponent(String name){
-        return componentMap.get(name);
+        DepictComponentView defaults = componentMap.get(name);
+        DepictComponentView componentView = new DepictComponentView(defaults.className,defaults.context);
+        componentView.properties = defaults.properties;
+        return componentView;
     }
 
     public static void registerComponents(Context context){
